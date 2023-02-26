@@ -28,10 +28,19 @@ const AppProvider = ({children}) => {
 
   const fetchRandomMeal = () => fetchMeals(randomMealUrl);
 
+  // on app load fetch all meals by default
   useEffect(() => {
+    fetchMeals(allMealUrl);
+  }, []);
+
+  // fetch user typed meals
+  useEffect(() => {
+    if (!searchTerm) {
+      return;
+    }
     fetchMeals(`${allMealUrl}${searchTerm}`);
   }, [searchTerm]);
-  
+
   return <AppContext.Provider value={{loading, meals, setSearchTerm, fetchRandomMeal}}>{children}</AppContext.Provider>;
 };
 
